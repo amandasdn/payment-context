@@ -4,5 +4,5 @@ Projeto desenvolvido utilizando os conceitos e boas práticas de domínios ricos
 ## Recursos utilizados:
 
 - Visual Studio 2019;
-- .Net Core 5;
+- .Net Core 5.0;
 - Flunt.

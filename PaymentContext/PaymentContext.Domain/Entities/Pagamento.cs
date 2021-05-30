@@ -1,14 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PaymentContext.Domain.ValueObjects;
+using System;
 
 namespace PaymentContext.Domain.Entities
 {
     public abstract class Pagamento
     {
-        protected Pagamento(DateTime dataPagamento, DateTime dataExpiracao, decimal valor, decimal valorPagamento, string proprietario, string documento, string email, string endereco)
+        protected Pagamento(
+            DateTime dataPagamento,
+            DateTime dataExpiracao,
+            decimal valor,
+            decimal valorPagamento,
+            string proprietario,
+            Documento documento,
+            Email email,
+            Endereco endereco)
         {
             Id = Guid.NewGuid().ToString().ToUpper().Replace("-","");
             DataPagamento = dataPagamento;
@@ -42,10 +47,10 @@ namespace PaymentContext.Domain.Entities
         /// </summary>
         public string Proprietario { get; private set; }
 
-        public string Documento { get; private set; }
+        public Documento Documento { get; private set; }
 
-        public string Email { get; private set; }
+        public Email Email { get; private set; }
 
-        public string Endereco { get; private set; }
+        public Endereco Endereco { get; private set; }
     }
 }

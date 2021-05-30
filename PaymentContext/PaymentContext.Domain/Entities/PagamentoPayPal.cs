@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PaymentContext.Domain.ValueObjects;
+using System;
 
 namespace PaymentContext.Domain.Entities
 {
@@ -14,9 +11,9 @@ namespace PaymentContext.Domain.Entities
                 decimal valor,
                 decimal valorPagamento,
                 string proprietario,
-                string documento,
-                string email,
-                string endereco, 
+                Documento documento,
+                Email email,
+                Endereco endereco,
 
                 string codigoTransacao
             )

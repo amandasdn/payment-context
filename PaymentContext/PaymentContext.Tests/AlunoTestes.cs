@@ -10,7 +10,7 @@ namespace PaymentContext.Tests
         public void AdicionarAssinatura()
         {
             var assinatura = new Assinatura(DateTime.Now.AddDays(30));
-            var aluno = new Aluno("Amanda", "Nascimento", "0000000000", "amanda@teste.com");
+            var aluno = new Aluno("Amanda", "Nascimento", null, null);
 
             aluno.AdicionarAssinatura(assinatura);
         }

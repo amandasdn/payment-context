@@ -1,4 +1,5 @@
-﻿using PaymentContext.Domain.ValueObjects;
+﻿using Flunt.Validations;
+using PaymentContext.Domain.ValueObjects;
 using PaymentContext.Shared.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +19,11 @@ namespace PaymentContext.Domain.Entities
 
             _assinaturas = new List<Assinatura>();
 
-            if (string.IsNullOrWhiteSpace(Nome))
-                AddNotification(ObterPropriedade<Aluno>(nameof(Nome)), "Nome inválido.");
-
-            if (string.IsNullOrWhiteSpace(Sobrenome))
-                AddNotification(ObterPropriedade<Aluno>(nameof(Sobrenome)), "Sobrenome inválido.");
+            AddNotifications(new Contract<Aluno>()
+                .Requires()
+                .IsNotNullOrEmpty(Nome, nameof(Nome), "Nome não foi preenchido.")
+                .IsNotNullOrEmpty(Sobrenome, nameof(Sobrenome), "Sobrenome não foi preenchido.")
+            );
         }
 
         public string Nome { get; private set; }
@@ -39,6 +40,24 @@ namespace PaymentContext.Domain.Entities
 
         public void AdicionarAssinatura(Assinatura assinatura)
         {
+            var possuiAssinatura = false;
+
+            foreach (var a in _assinaturas)
+                if (a.Ativo)
+                    possuiAssinatura = true;
+
+            // Opção 1:
+            AddNotifications(new Contract<Aluno>()
+                .Requires()
+                .IsFalse(possuiAssinatura, nameof(Assinaturas), "Este aluno já possui uma assinatura ativa.")
+            );
+
+            // Opção 2:
+            // if (possuiAssinatura)
+            //     AddNotification(nameof(Assinaturas), "Este aluno já possui uma assinatura ativa.");
+
+            /////
+
             foreach (var a in Assinaturas)
                 a.AlterarStatusAssinatura(false);
 

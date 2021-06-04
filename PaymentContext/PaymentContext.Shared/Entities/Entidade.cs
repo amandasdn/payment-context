@@ -11,10 +11,5 @@ namespace PaymentContext.Shared.Entities
         }
 
         public Guid Id { get; private set; }
-
-        /// <summary>
-        /// Obtém o nome da entidade + propriedade.
-        /// </summary>
-        public string ObterPropriedade<T>(string propriedade) => $"{typeof(T)}.{propriedade}";
     }
 }

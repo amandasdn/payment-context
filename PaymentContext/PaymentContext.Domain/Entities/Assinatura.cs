@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Flunt.Validations;
+using PaymentContext.Shared.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace PaymentContext.Domain.Entities
 {
-    public class Assinatura
+    public class Assinatura : Entidade
     {
         private IList<Pagamento> _pagamentos;
 
@@ -30,6 +32,10 @@ namespace PaymentContext.Domain.Entities
 
         public void AdicionarPagamento(Pagamento pagamento)
         {
+            AddNotifications(new Contract<Assinatura>()
+                .Requires()
+                .IsLowerThan(pagamento.DataPagamento, DateTime.Now, nameof(pagamento.DataPagamento), "A data do pagamento deve ser futura.")
+                );
             _pagamentos.Add(pagamento);
         }
         

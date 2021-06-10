@@ -1,32 +1,40 @@
-﻿using PaymentContext.Domain.ValueObjects;
+﻿using Flunt.Validations;
+using PaymentContext.Domain.ValueObjects;
+using PaymentContext.Shared.Entities;
 using System;
 
 namespace PaymentContext.Domain.Entities
 {
-    public abstract class Pagamento
+    public abstract class Pagamento : Entidade
     {
-        protected Pagamento(
+        protected Pagamento (
             DateTime dataPagamento,
             DateTime dataExpiracao,
-            decimal valor,
+            decimal valorTotal,
             decimal valorPagamento,
             string proprietario,
             Documento documento,
             Email email,
             Endereco endereco)
         {
-            Id = Guid.NewGuid().ToString().ToUpper().Replace("-","");
+            IdPagamento = Guid.NewGuid().ToString().ToUpper().Replace("-","");
             DataPagamento = dataPagamento;
             DataExpiracao = dataExpiracao;
-            Valor = valor;
+            ValorTotal = valorTotal;
             ValorPagamento = valorPagamento;
             Proprietario = proprietario;
             Documento = documento;
             Email = email;
             Endereco = endereco;
+
+            AddNotifications(new Contract<Pagamento>()
+                .Requires()
+                .IsLowerThan(ValorTotal, 0, nameof(ValorTotal), "O valor total não pode ser zero.")
+                .IsGreaterThan(ValorTotal, ValorPagamento, nameof(ValorTotal), "O valor pago é menor que o valor total.")
+            );
         }
 
-        public string Id { get; private set; }
+        public string IdPagamento { get; private set; }
 
         public DateTime DataPagamento { get; private set; }
 
@@ -35,7 +43,7 @@ namespace PaymentContext.Domain.Entities
         /// <summary>
         /// Valor total.
         /// </summary>
-        public decimal Valor { get; private set; }
+        public decimal ValorTotal { get; private set; }
 
         /// <summary>
         /// Valor do pagamento.

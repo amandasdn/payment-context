@@ -6,7 +6,7 @@ namespace PaymentContext.Domain.ValueObjects
     {
         public Endereco(string cep, string logradouro, string numero, string complemento, string bairro, string cidade, string estado, string pais)
         {
-            Cep = cep;
+            Cep = FormatarCEP(cep);
             Logradouro = logradouro;
             Numero = numero;
             Complemento = complemento;
@@ -31,5 +31,7 @@ namespace PaymentContext.Domain.ValueObjects
         public string Estado { get; set; }
 
         public string Pais { get; set; }
+
+        private string FormatarCEP(string cep) => cep.Replace("-", "");
     }
 }

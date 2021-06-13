@@ -32,11 +32,12 @@ namespace PaymentContext.Domain.Entities
 
         public void AdicionarPagamento(Pagamento pagamento)
         {
-            AddNotifications(new Contract<Assinatura>()
+            AddNotifications(new Contract<Pagamento>()
                 .Requires()
                 .IsLowerThan(pagamento.DataPagamento, DateTime.Now, nameof(pagamento.DataPagamento), "A data do pagamento deve ser futura.")
-                );
-            _pagamentos.Add(pagamento);
+            );
+
+            if(IsValid) _pagamentos.Add(pagamento);
         }
         
         public void AlterarStatusAssinatura(bool ativo)

@@ -8,18 +8,19 @@ namespace PaymentContext.Domain.ValueObjects
     {
         public Documento(string numero, ETipoDocumento tipo)
         {
-            Numero = numero;
+            Numero = FormatarNumero(numero);
             Tipo = tipo;
 
             AddNotifications(new Contract<Documento>()
                 .Requires()
-                .IsTrue(Valido(), "Document.Number", "Documento inválido")
+                .IsNotEmpty(Numero, nameof(Numero), "Necessário informar o número do documento.")
+                .IsTrue(Valido(), nameof(Numero), "Documento inválido.")
             );
         }
 
-        public string Numero { get; set; }
+        public string Numero { get; private set; }
 
-        public ETipoDocumento Tipo { get; set; }
+        public ETipoDocumento Tipo { get; private set; }
 
         private bool Valido()
         {
@@ -31,5 +32,7 @@ namespace PaymentContext.Domain.ValueObjects
 
             return false;
         }
+
+        private string FormatarNumero(string numero) => numero.Replace("-", "").Replace("/", "");
     }
 }

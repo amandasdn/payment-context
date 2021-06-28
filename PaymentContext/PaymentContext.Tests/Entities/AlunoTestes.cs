@@ -38,10 +38,10 @@ namespace PaymentContext.Tests.Entities
         [Fact(DisplayName = "Assinatura - Retornar erro quando não há pagamento na assinatura")]
         public void TestarAssinatura_RetornarErroQuandoNaoHaPagamento()
         {
-            // var assinatura = new Assinatura(null);
-            // _aluno.AdicionarAssinatura(assinatura);
-            // 
-            // Assert.False(_aluno.IsValid);
+            var assinatura = new Assinatura(null);
+            _aluno.AdicionarAssinatura(assinatura);
+            
+            Assert.False(_aluno.IsValid);
         }
 
         [Fact(DisplayName = "Assinatura - Retornar sucesso")]

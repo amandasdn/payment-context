@@ -50,13 +50,12 @@ namespace PaymentContext.Domain.Entities
             AddNotifications(new Contract<Aluno>()
                 .Requires()
                 .IsFalse(possuiAssinatura, nameof(Assinaturas), "Este aluno já possui uma assinatura ativa.")
+                .AreNotEquals(0, assinatura.Pagamentos.Count, $"{nameof(Assinaturas)}.{nameof(Pagamento)}", "Esta assinatura não possui pagamentos")
             );
 
             // Opção 2:
             // if (possuiAssinatura)
             //     AddNotification(nameof(Assinaturas), "Este aluno já possui uma assinatura ativa.");
-
-            /////
 
             foreach (var a in Assinaturas)
                 a.AlterarStatusAssinatura(false);
